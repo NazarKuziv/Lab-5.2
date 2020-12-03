@@ -11,7 +11,7 @@
 
 using namespace std;
 
-void S(const double x, const double eps, int &n, double & s);
+void S(const double x, const double eps, int &n, double &s);
 void A(const double x, const int n, double &a);
 
 int main()
@@ -19,6 +19,8 @@ int main()
 	SetConsoleOutputCP(1251);
 	double xp, xk, x, dx, eps, s = 0;
 	int n;
+
+
 	cout << "xp = "; cin >> xp;
 	cout << "xk = "; cin >> xk;
 	cout << "dx = "; cin >> dx;
@@ -28,7 +30,7 @@ int main()
 	cout << "|" << setw(28) << "Ряд Тейлора" << setw(15) << "|" << endl;
 	cout << "-------------------------------------------------" << endl;
 	cout << "|" << setw(5) << "x" << "   |"
-		<< setw(9) << "exp(x)" << "  |"
+		<< setw(9) << "log(1 - x)" << "  |"
 		<< setw(7) << "s" << "    |"
 		<< setw(5) << "n" << "    |"
 		<< endl;
@@ -37,9 +39,14 @@ int main()
 	x = xp;
 	while (x <= xk && x >= -1 && x < 1)
 	{
+		
+
 		S(x, eps, n, s);
+
+		
+
 		cout << "|" << setw(7) << setprecision(2) << x << " |"
-			<< setw(10) << setprecision(4) << exp(x) << " |"
+			<< setw(10) << setprecision(4) << log(1 - x) << " |"
 			<< setw(10) << setprecision(4) << s << " |"
 			<< setw(5) << n << "    |"
 			<< endl;
@@ -51,19 +58,20 @@ int main()
 
 void S(const double x, const double eps, int &n, double &s)
 {
-	n = 1; 
-	double a = x; 
+	n = 1;
+	double a = x;
 	s = a;
 	do {
 		n++;
 		A(x, n, a);
 		s += a;
-		s *= -1;
-	} while (a >= eps);
+		
+	} while (abs(a) >= eps);
+	s *= -1;
 }
 
 void A(const double x, const int n, double &a)
 {
-	double R = x * (n - 1.) / n; 
+	double R = x * (n - 1.) / n;
 	a *= R;
 }
